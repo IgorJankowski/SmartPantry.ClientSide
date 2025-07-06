@@ -16,6 +16,10 @@
       >In future there may be feature to add calories intake(fitness app feat) and suggestions of
       menu to fit your macro and cal needs</span
     >
+
+    <button class="btn btn-primary">
+      <router-link to="/inventory/item-upsert">Add Product</router-link>
+    </button>
   </main>
 </template>
 
