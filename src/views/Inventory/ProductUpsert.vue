@@ -3,8 +3,8 @@
     <h2>{{ isEdit ? 'Edit Product' : 'Add New Product' }}</h2>
     <form @submit.prevent="submitForm">
       <div class="form-group">
-        <label for="productName">product Name</label>
-        <input
+        <VInput
+          label="Product Name"
           id="productName"
           name="productName"
           type="text"
@@ -14,13 +14,10 @@
           :aria-describedby="'productName-error'"
           required
         />
-        <span v-if="errors.productName" id="productName-error" class="error-msg">
-          {{ errors.productName }}
-        </span>
       </div>
       <div class="form-group">
-        <label for="quantity">Quantity</label>
-        <input
+        <VInput
+          label="Quantity"
           id="quantity"
           name="quantity"
           type="number"
@@ -31,13 +28,10 @@
           :aria-describedby="'quantity-error'"
           required
         />
-        <span v-if="errors.quantity" id="quantity-error" class="error-msg">
-          {{ errors.quantity }}
-        </span>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="category">Category</label>
-        <input
+        <VInput
           id="category"
           name="category"
           type="text"
@@ -49,8 +43,20 @@
         <span v-if="errors.category" id="category-error" class="error-msg">
           {{ errors.category }}
         </span>
-      </div>
+      </div> -->
 
+      <div class="form-group">
+        <VInput
+          label="Description"
+          id="description"
+          name="description"
+          type="text"
+          placeholder="Enter description"
+          v-model="description"
+          :aria-invalid="errors.description ? 'true' : 'false'"
+          :aria-describedby="'description-error'"
+        />
+      </div>
       <button type="submit" :disabled="!meta.valid">
         {{ isEdit ? 'Update' : 'Add' }}
       </button>
@@ -59,14 +65,16 @@
 </template>
 
 <script lang="ts" setup>
+import VInput from '@/components/VInput.vue'
+import { apiBaseUrl } from '@/config'
+import axios from 'axios'
 import { useField, useForm } from 'vee-validate'
-import { watch } from 'vue'
 import * as yup from 'yup'
 
 const props = defineProps({
   initialProduct: {
     type: Object,
-    default: () => ({ productName: '', quantity: 0, category: '' }),
+    default: () => ({ productName: '', quantity: 0, description: '' }),
   },
 })
 
@@ -75,7 +83,8 @@ const isEdit = !!props.initialProduct && !!props.initialProduct.id
 const schema = yup.object({
   productName: yup.string().required('Product name is required'),
   quantity: yup.number().min(1, 'Quantity must be at least 1').required('Quantity is required'),
-  category: yup.string().optional(),
+  description: yup.string().optional(),
+  // category: yup.string().optional(),
 })
 
 const { handleSubmit, meta } = useForm({
@@ -84,52 +93,35 @@ const { handleSubmit, meta } = useForm({
 })
 const { value: productName, errorMessage: productNameError } = useField<string>('productName')
 const { value: quantity, errorMessage: quantityError } = useField<number>('quantity')
-const { value: category, errorMessage: categoryError } = useField<string>('category')
+const { value: description, errorMessage: descriptionError } = useField<string>('description')
+// const { value: category, errorMessage: categoryError } = useField<string>('category')
 
 const errors = {
   productName: productNameError,
   quantity: quantityError,
-  category: categoryError,
+  description: descriptionError,
+  // category: categoryError,
 }
 
-const onSubmit = (values: typeof props.initialProduct) => {
+const onSubmit = async (values: typeof props.initialProduct) => {
   if (isEdit) {
     // Update product logic
     console.log('Updating product:', values)
   } else {
     // Add new product logic
+    await axios
+      .post(`${apiBaseUrl}/inventory/add`, values)
+      .then((response) => {
+        console.log('Product added successfully:', response.data)
+      })
+      .catch((error) => {
+        console.error('Error adding product:', error)
+      })
     console.log('Adding new product:', values)
   }
 }
 
 const submitForm = handleSubmit(onSubmit)
-watch(
-  () => productName.value,
-  (value) => {
-    if (value) {
-      console.log('Form values changed:', value)
-    }
-  },
-  { immediate: true },
-)
-watch(
-  () => quantity.value,
-  (value) => {
-    if (value) {
-      console.log('Form values changed:', value)
-    }
-  },
-  { immediate: true },
-)
-watch(
-  () => category.value,
-  (value) => {
-    if (value) {
-      console.log('Form values changed:', value)
-    }
-  },
-  { immediate: true },
-)
 </script>
 
 <style scoped>

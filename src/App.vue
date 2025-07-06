@@ -2,13 +2,13 @@
 import { RouterLink, RouterView } from 'vue-router'
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
+import { apiBaseUrl } from './config'
 
-const API_BASE_URL = 'http://localhost:5000'
 const test = ref(null)
 
 const getTest = async () => {
   try {
-    const response = await axios(`${API_BASE_URL}/inventory/test`)
+    const response = await axios(`${apiBaseUrl}/inventory/test`)
 
     if (!response) throw new Error('Network response was not ok')
     return response.data

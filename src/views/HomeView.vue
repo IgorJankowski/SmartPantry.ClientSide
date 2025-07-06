@@ -18,7 +18,7 @@
     >
 
     <button class="btn btn-primary">
-      <router-link to="/inventory/item-upsert">Add Product</router-link>
+      <router-link to="/inventory/product-upsert">Add Product</router-link>
     </button>
   </main>
 </template>

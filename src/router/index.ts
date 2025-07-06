@@ -10,9 +10,9 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/inventory/item-upsert',
-      name: 'item-upsert',
-      component: () => import('../views/Inventory/ItemUpsert.vue'),
+      path: '/inventory/product-upsert',
+      name: 'product-upsert',
+      component: () => import('../views/Inventory/ProductUpsert.vue'),
     },
   ],
 })
