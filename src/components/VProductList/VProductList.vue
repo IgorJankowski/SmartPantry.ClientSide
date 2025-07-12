@@ -11,7 +11,7 @@
         <tr>
           <th>Name</th>
           <th>Quantity</th>
-          <th>Category</th>
+          <th>Description</th>
           <th>Expiration Date</th>
         </tr>
       </thead>

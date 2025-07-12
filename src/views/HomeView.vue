@@ -1,20 +1,30 @@
 <template>
   <main>
     <div>
-      <span>top bar with product search and maybe recipe search? or that may be a diff view</span>
+      <div class="mb-4">
+        <span>top bar with product search and maybe recipe search? or that may be a diff view</span>
+      </div>
 
-      <span>action bar add prod, shopping list, check inventory</span>
+      <div class="mb-4"><span>action bar shopping list, check inventory</span></div>
 
-      <span>That's a placeholder for notifications like num of stored items, </span>
-      <span>soon expiring items with suggestions how to use them</span>
-      <span>products that low in quantity like milk, flour, butter, eggs</span>
-      <span>and shopping list</span>
-      <span>maybe some ai powered suggestions like You've got x try to cook Y</span>
+      <div class="mb-4">
+        <span>That's a placeholder for notifications like num of stored items, </span>
+      </div>
+      <div class="mb-4"><span>soon expiring items with suggestions how to use them</span></div>
+      <div class="mb-4">
+        <span>products that low in quantity like milk, flour, butter, eggs</span>
+      </div>
+      <div class="mb-4"><span>and shopping list</span></div>
+      <div class="mb-4">
+        <span>maybe some ai powered suggestions like You've got x try to cook Y</span>
+      </div>
 
-      <span
-        >In future there may be feature to add calories intake(fitness app feat) and suggestions of
-        menu to fit your macro and cal needs</span
-      >
+      <div>
+        <span>
+          In future there may be feature to add calories intake(fitness app feat) and suggestions of
+          menu to fit your macro and cal needs
+        </span>
+      </div>
     </div>
     <VProductList :products="products" />
   </main>
