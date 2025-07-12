@@ -104,20 +104,20 @@ const errors = {
 }
 
 const onSubmit = async (values: typeof props.initialProduct) => {
-  if (isEdit) {
-    // Update product logic
-    console.log('Updating product:', values)
-  } else {
-    // Add new product logic
-    await axios
-      .post(`${apiBaseUrl}/inventory/add`, values)
-      .then((response) => {
-        console.log('Product added successfully:', response.data)
-      })
-      .catch((error) => {
-        console.error('Error adding product:', error)
-      })
-    console.log('Adding new product:', values)
+  try {
+    if (isEdit) {
+      // Update product logic
+      console.log('Updating product:', values)
+    } else {
+      // Add new product logic
+      const result = await axios.post(`${apiBaseUrl}/inventory/add`, values)
+      if (result.status === 200) {
+        console.log('Product added successfully:', result.data)
+      }
+      console.log('Adding new product:', values)
+    }
+  } catch (error) {
+    console.error('Error adding product:', error)
   }
 }
 
