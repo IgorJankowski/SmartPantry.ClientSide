@@ -9,6 +9,7 @@
 
       <div class="mb-4">
         <span>That's a placeholder for notifications like num of stored items, </span>
+        <VNotificationGroup :notifications="notifications" />
       </div>
       <div class="mb-4"><span>soon expiring items with suggestions how to use them</span></div>
       <div class="mb-4">
@@ -31,11 +32,23 @@
 </template>
 
 <script setup lang="ts">
+import VNotificationGroup from '@/components/VNotification/VNotificationGroup.vue'
 import VProductList from '@/components/VProductList/VProductList.vue'
 import { apiBaseUrl } from '@/config'
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 const products = ref([])
+
+const notifications = [
+  {
+    title: 'Stored Items',
+    message: `You have 24 items stored in your pantry.`,
+  },
+  {
+    title: 'Soon Expired',
+    message: `3 items are expiring within the next 7 days.`,
+  },
+]
 
 onMounted(async () => {
   try {
